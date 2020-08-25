@@ -1,0 +1,53 @@
+<design:component>
+    <design:attribute name="object" label="Object Api Name" description="" />
+    <design:attribute name="relationshipName" label="Relationship Name" description="" />
+    <design:attribute name="field1Name" label="field1Name" description="" />
+    <design:attribute name="field1Type" label="field1Type" description="The company recordPage This Component Is being Called From." />
+    <design:attribute name="field1Label" label="field1Label"/>
+    <design:attribute name="field1Size" label="field1Size"/>
+    <design:attribute name="field2Name" label="field2Name" description="" />
+    <design:attribute name="field2Label" label="field2Label" description="" />
+    <design:attribute name="field2Type" label="field2Type" description="" />
+    <design:attribute name="field2Size" label="field2Size" description="" />
+    <design:attribute name="field3Name" label="field3Name" description="" />
+    <design:attribute name="field3Label" label="field3Label" description="" />
+    <design:attribute name="field3Type" label="field3Type" description="" />
+    <design:attribute name="field3Size" label="field3Size" description="" />
+    <design:attribute name="field4Name" label="field4Name" description="" />
+    <design:attribute name="field4Label" label="field4Label" description="" />
+    <design:attribute name="field4Type" label="field4Type" description="" />
+        <design:attribute name="field4Size" label="field4Size" description="" />
+
+    <design:attribute name="field5Name" label="field5Name" description="" />
+    <design:attribute name="field5Label" label="field5Label" description="" />
+    <design:attribute name="field5Type" label="field5Type" description="" />
+        <design:attribute name="field5Size" label="field5Size" description="" />
+
+    <design:attribute name="field6Name" label="field6Name" description="" />
+    <design:attribute name="field6Label" label="field6Label" description="" />
+    <design:attribute name="field6Type" label="field6Type" description="" />
+        <design:attribute name="field6Size" label="field6Size" description="" />
+
+    <design:attribute name="field7Name" label="field7Name" description="" />
+    <design:attribute name="field7Label" label="field7Label" description="" />
+    <design:attribute name="field7Type" label="field7Type" description="" />
+        <design:attribute name="field7Size" label="field7Size" description="" />
+
+    <design:attribute name="field8Name" label="field8Name" description="" />
+    <design:attribute name="field8Label" label="field8Label" description="" />
+    <design:attribute name="field8Type" label="field8Type" description="" />
+        <design:attribute name="field8Size" label="field8Size" description="" />
+
+    <design:attribute name="field9Name" label="field9Name" description="" />
+    <design:attribute name="field9Label" label="field9Label" description="" />
+    <design:attribute name="field9Type" label="field9Type" description="" />
+    <design:attribute name="andClause" label="query and clause" description="" />
+    
+    <design:attribute name="buttonVariant"
+                      label="Operator"
+                    datasource="equals,greater than,less than, contains, " />
+    
+    
+    
+    
+</design:component>
