@@ -1,0 +1,187 @@
+public class relatedListController {
+    
+    @auraEnabled
+    public static List<DataWrapper> getTableData(String sObjectType, List<String> fieldList, String parentId, String relationshipName, string andClause){
+        Map<String,Schema.SObjectField> fieldMap =  Schema.getGlobalDescribe().get(sObjectType).getDescribe().fields.getMap();
+        Map<String, Set<Id>> beforeQueryMap = New Map<String, Set<Id>>();
+        Map<Id, String> afterQueryMap = NEw MAp<Id, String>();
+        Set<Id> lookupIdSet = New Set<Id>();
+        List<DataWrapper> dwList = New List<DataWrapper>();
+        String query = 'select Id ' ;
+        for(Integer i = 0; i < fieldList.size(); i++){
+            if(fieldList[i] != null)
+                query += ', ' + fieldList[i];
+        }
+        query += ' from ' + sObjectType + ' where ' + relationshipName + ' = :parentId';
+        if(andClause != null)
+            query += ' AND '+andClause;
+        
+        system.debug('query >>> ' + query);
+        List<Sobject> objectlist = Database.query(query);
+        system.debug(objectlist);
+        
+        for(Sobject obj : objectlist){
+            for(String field : fieldList){
+                if(field != null){
+                    system.debug('looping filed '+ field + '  to check for lookup');
+                    if(fieldMap.get(field).GetDescribe().getReferenceTo() != null && fieldMap.get(field).GetDescribe().getReferenceTo().size() >0){
+                        system.debug('Found lookup !!!!! ' + field);
+                        Id myId = (String.valueOf(obj.get(field)));
+                        system.debug('lookup id >>>> ' +myId);
+                        if(myId != null){
+                            
+                            String objectName = myId.getSObjectType().getDescribe().getName();
+                            if(beforeQueryMap != null && !beforeQueryMap.keySet().contains(objectName))
+                                beforeQueryMap.put(objectName, New Set<Id>());
+                            beforeQueryMap.get(objectName).add(myId);
+                        }
+                    }
+                }
+            }
+        }
+        
+        for(String st : beforeQueryMap.keySet()){
+            Set<Id> querySet = beforeQueryMap.get(st);
+            String query2 = 'select Id, Name from ' + st + ' where Id IN :querySet';
+            List<SObject> objects = Database.query(query2);
+            for(Sobject sobj : objects){
+                afterQueryMap.put(String.valueOf(sobj.get('Id')), String.valueOf(sobj.get('Name')));
+            }
+        }
+        for(Sobject obj : objectlist){
+            DataWrapper dw = NEw DataWrapper();
+            integer i = 1;
+            for(String field : fieldList){
+                if(field != null && String.valueOf(obj.get(field)) != null){
+                    
+                    if(field == 'Name'){
+                        if(i == 1){
+                            dw.column1 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column1_Url_Label = String.valueOf(obj.get(field));
+                        }
+                        if(i == 2){
+                            dw.column2 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column2_Url_Label = String.valueOf(obj.get(field));
+                        }
+                        if(i == 3){
+                            dw.column3 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column3_Url_Label =  String.valueOf(obj.get(field));
+                        }
+                        if(i == 4){
+                            dw.column4 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column4_Url_Label = String.valueOf(obj.get(field));
+                        }
+                        if(i == 5){
+                            dw.column5 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column5_Url_Label = String.valueOf(obj.get(field));
+                        }
+                        if(i == 6){
+                            dw.column6 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column6_Url_Label = String.valueOf(obj.get(field));
+                        }if(i == 6){
+                            dw.column6 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column6_Url_Label = String.valueOf(obj.get(field));
+                        }if(i == 7){
+                            dw.column7 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column7_Url_Label = String.valueOf(obj.get(field));
+                        }if(i == 8){
+                            dw.column8 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column8_Url_Label = String.valueOf(obj.get(field));
+                        }
+                        if(i == 9){
+                            dw.column9 = '/' + String.valueOf(obj.get('Id'));
+                            dw.column9_Url_Label = String.valueOf(obj.get(field));
+                        }
+                    }
+                    else if(fieldMap.get(field).GetDescribe().getReferenceTo() == null || fieldMap.get(field).GetDescribe().getReferenceTo().size() == 0){ 
+                        
+                        if(i == 1)
+                            dw.column1 = String.valueOf(obj.get(field));
+                        if(i == 2)
+                            dw.column2 = String.valueOf(obj.get(field));
+                        if(i == 3)
+                            dw.column3 = String.valueOf(obj.get(field));
+                        if(i == 4)
+                            dw.column4 = String.valueOf(obj.get(field));
+                        if(i == 5)
+                            dw.column5 = String.valueOf(obj.get(field));
+                        if(i == 6)
+                            dw.column6 = String.valueOf(obj.get(field));
+                        if(i == 7)
+                            dw.column7 = String.valueOf(obj.get(field));
+                        if(i == 8)
+                            dw.column8 = String.valueOf(obj.get(field));
+                        if(i == 9)
+                            dw.column9 = String.valueOf(obj.get(field));
+                    }else{
+                        if(i == 1){
+                            dw.column1 = '/' + String.valueOf(obj.get(field));
+                            dw.column1_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }
+                        if(i == 2){
+                            dw.column2 = '/' + String.valueOf(obj.get(field));
+                            dw.column2_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }
+                        if(i == 3){
+                            dw.column3 = '/' + String.valueOf(obj.get(field));
+                            dw.column3_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }
+                        if(i == 4){
+                            dw.column4 = '/' + String.valueOf(obj.get(field));
+                            dw.column4_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }
+                        if(i == 5){
+                            dw.column5 = '/' + String.valueOf(obj.get(field));
+                            dw.column5_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }if(i == 6){
+                            dw.column6 = '/' + String.valueOf(obj.get(field));
+                            dw.column6_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }if(i == 7){
+                            dw.column7 = '/' + String.valueOf(obj.get(field));
+                            dw.column7_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }if(i == 8){
+                            dw.column8 = '/' + String.valueOf(obj.get(field));
+                            dw.column8_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                        }if(i == 9){
+                            dw.column9 = '/' + String.valueOf(obj.get(field));
+                            dw.column9_Url_Label = afterQueryMap.get(String.valueOf(obj.get(field)));
+                            
+                        }
+                    }
+                }
+                i++;
+            }
+            dwList.add(dw);
+        }
+        system.debug(dwList);
+        return dwList;
+    }
+    
+    public class DataWrapper{
+        @auraEnabled public String column1;
+        @auraEnabled public String column1_Url_Label;
+        @auraEnabled public String column2;
+        @auraEnabled public String column2_Url_Label;
+        @auraEnabled public String column3;
+        @auraEnabled public String column3_Url_Label;
+        @auraEnabled public String column4;
+        @auraEnabled public String column4_Url_Label;
+        @auraEnabled public String column5;
+        @auraEnabled public String column5_Url_Label;
+        @auraEnabled public String column6;
+        @auraEnabled public String column6_Url_Label;
+        @auraEnabled public String column7;
+        @auraEnabled public String column7_Url_Label;
+        @auraEnabled public String column8;
+        @auraEnabled public String column8_Url_Label;
+        @auraEnabled public String column9;
+        @auraEnabled public String column9_Url_Label;
+    }
+    @auraEnabled
+    public static DataWrapper createDataWrapper(String sObjectType, Sobject obj,  List<String> fieldList){
+        DataWrapper dw = New DataWrapper();
+        
+        return dw;
+    }
+    
+}
