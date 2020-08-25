@@ -1,0 +1,129 @@
+<aura:component controller="relatedListController"
+                implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction">
+    <aura:attribute name="recordId" type="String" default="{!v.recordId}" />
+    <aura:attribute name="columns" type="List"/>
+    <aura:attribute name="tableData" type="Object"/>
+    <aura:attribute name="filteredDoctorData" type="Object"/>
+    <aura:attribute name="sortBy" type="String"/>
+    <aura:attribute name="sortDirection" type="String"/>
+    <aura:attribute name="isLoading" type="Boolean" default="false"/>
+    <aura:attribute name="enableInfiniteLoading" type="Boolean" default="true"/>
+    <aura:attribute name="initialRows" type="Integer" default="100"/>
+    <aura:attribute name="currentCount" type="Integer" default="100"/>
+    <aura:attribute name="totalRows" type="Integer" default="0"/>
+    <aura:attribute name="loadOffset" type="Integer" default="1"/>
+    <aura:attribute name="filter" type="String" />
+    
+    <aura:attribute name="object" type="String" />
+    <aura:attribute name="relationshipName" type="String" />
+    <aura:attribute name="field1Name" type="String" />
+    <aura:attribute name="field1Label" type="String" />
+    <aura:attribute name="field1Type" type="String" />
+    <aura:attribute name="field1Size" type="Integer" />
+    
+    <aura:attribute name="field2Name" type="String" />
+    <aura:attribute name="field2Label" type="String" />
+    <aura:attribute name="field2Type" type="String" />
+    <aura:attribute name="field2Size" type="Integer" />
+    <aura:attribute name="field3Name" type="String" />
+    <aura:attribute name="field3Label" type="String" />
+    <aura:attribute name="field3Type" type="String" />
+    <aura:attribute name="field3Size" type="Integer" />
+    
+    <aura:attribute name="field4Name" type="String" />
+    <aura:attribute name="field4Label" type="String" />
+    <aura:attribute name="field4Type" type="String" />
+    <aura:attribute name="field4Size" type="Integer" />
+    <aura:attribute name="field5Name" type="String" />
+    <aura:attribute name="field5Label" type="String" />
+    <aura:attribute name="field5Type" type="String" />
+    <aura:attribute name="field5Size" type="Integer" />
+    <aura:attribute name="field6Name" type="String" />
+    <aura:attribute name="field6Label" type="String" />
+    <aura:attribute name="field6Type" type="String" />
+    <aura:attribute name="field6Size" type="Integer" />
+    <aura:attribute name="field7Name" type="String" />
+    <aura:attribute name="field7Label" type="String" />
+    <aura:attribute name="field7Type" type="String" />
+    <aura:attribute name="field7Size" type="Integer" />
+    <aura:attribute name="field8Name" type="String" />
+    <aura:attribute name="field8Label" type="String" />
+    <aura:attribute name="field8Type" type="String" />
+    <aura:attribute name="field8Size" type="Integer" />
+    <aura:attribute name="field9Name" type="String" />
+    <aura:attribute name="field9Label" type="String" />
+    <aura:attribute name="field9Type" type="String" />
+    <aura:attribute name="datasource" type="String[]" />
+    <aura:attribute name="buttonVariant" type="String" />
+     <aura:attribute name="andClause" type="String" />
+    
+    
+    
+    
+    
+    
+    
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}"/> 
+    <aura:handler name="change" value="{!v.filter}" action="{!c.updateFilter}" />
+    
+    <aura:if isTrue="{!v.isLoading}">
+        <lightning:spinner variant="brand"  size="medium" />
+    </aura:if>    
+    
+    
+    <div class="slds-box slds-card slds-card slds-card_boundary  slds-grid slds-grid--vertical forceListViewManager " style="padding:0px;">
+        
+        <div class="slds-page-header slds-page-header_joined slds-page-header_bleed slds-shrink-none test-headerRegion slds-is-relative slds-page-header--object-home">
+            
+            <div class="slds-float_left slds-card__header-title slds-col slds-has-flexi-truncate firstHeaderRow " style= "margin-left:0px">
+                <lightning:icon iconName="custom:custom94" alternativeText="details" size="small" class="slds-m-right--x-small"/>
+            </div>
+            
+            <div class="slds-col ">
+                <span>
+                    <h2 class="slds-page-header__title listViewTitle slds-text-color--default slds-p-right--x-small slds-m-bottom_small slds-truncate slds-page-header--object-home  ">
+                        Projects ({!v.totalRows})
+                    </h2>
+                </span>
+            </div>
+            
+            <!--
+                
+                <div class="slds-col search-input">
+                    <span>
+                     <lightning:input name="search" value="{!v.filter}" type="search" />
+                    </span>
+                </div>
+-->
+            <div class="slds-col">
+                <span></span>
+            </div>
+        </div>
+        <div class="slds-grid listViewContainer safari-workaround">     
+            
+            
+            <lightning:datatable aura:id="relatedList"
+                                 keyField="Id"
+                                 showRowNumberColumn="true"
+                                 hideCheckboxColumn="true"
+                                 columns="{!v.columns }"
+                                 data="{!v.tableData}"
+                                 sortedBy="{!v.sortBy}"
+                                 sortedDirection="{!v.sortDirection}"
+                                 onsort="{!c.handleSort}"
+                                 enableInfiniteLoading="true"
+                                 loadMoreOffset="{!v.loadOffset}"
+                                 />
+        </div> 
+        
+    </div>
+    
+    <aura:set attribute="else">
+        <div class="slds-text-heading_large slds-text-align_center slds-p-top_large">
+            No Doctors To Display
+        </div>
+        
+    </aura:set>
+    
+    
+</aura:component>
